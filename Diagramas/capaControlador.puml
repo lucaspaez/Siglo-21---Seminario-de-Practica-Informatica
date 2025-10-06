@@ -1,3 +1,13 @@
+/'
+Materia: Desarrollo Web
+Trabajo Práctico Nro 2
+
+Profesor Titular Disciplinar: Pablo Alejandro Virgolini
+Titular Experto: Hugo Fernando Frias
+Alumno: Lucas Leonardo Paez
+Legajo: VINF016138
+'/
+
 @startuml Clases_Controladores
 title Capa de Controladores (Lógica del negocio - MVC)
 
@@ -53,12 +63,6 @@ class ControladorEgreso extends ControladorBase {
   + registrarEgresoProveedor(proveedor:Proveedor, monto:double)
   + registrarEgresoEmpleado(empleado:Empleado, monto:double)
 }
-
-ControladorBase <|-- ControladorCliente
-ControladorBase <|-- ControladorTurno
-ControladorBase <|-- ControladorVenta
-ControladorBase <|-- ControladorIngreso
-ControladorBase <|-- ControladorEgreso
 
 }
 

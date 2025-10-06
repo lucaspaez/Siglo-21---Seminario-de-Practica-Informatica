@@ -1,3 +1,13 @@
+/*
+Materia: Desarrollo Web
+Trabajo Práctico Nro 2
+
+Profesor Titular Disciplinar: Pablo Alejandro Virgolini
+Titular Experto: Hugo Fernando Frias
+Alumno: Lucas Leonardo Paez
+Legajo: VINF016138
+*/
+
 -- Script: peluqueria.sql
 DROP DATABASE IF EXISTS peluqueria;
 CREATE DATABASE peluqueria CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;

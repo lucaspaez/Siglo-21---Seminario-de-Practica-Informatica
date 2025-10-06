@@ -1,3 +1,13 @@
+/*
+Materia: Desarrollo Web
+Trabajo Práctico Nro 2
+
+Profesor Titular Disciplinar: Pablo Alejandro Virgolini
+Titular Experto: Hugo Fernando Frias
+Alumno: Lucas Leonardo Paez
+Legajo: VINF016138
+*/
+
 -- Listar todos los turnos con cliente, empleado y servicios (servicios concatenados)
 SELECT
   t.idTurno,

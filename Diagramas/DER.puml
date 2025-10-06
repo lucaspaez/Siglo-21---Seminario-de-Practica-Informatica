@@ -1,0 +1,132 @@
+/'
+Materia: Desarrollo Web
+Trabajo Práctico Nro 2
+
+Profesor Titular Disciplinar: Pablo Alejandro Virgolini
+Titular Experto: Hugo Fernando Frias
+Alumno: Lucas Leonardo Paez
+Legajo: VINF016138
+'/
+
+@startuml DER_Peluqueria_Final
+title DER - Sistema de Gestión de Peluquería (vFinal)
+
+entity Cliente {
+  * idCliente : INT <<PK>>
+  --
+  nombre : VARCHAR(100)
+  telefono : VARCHAR(20)
+  email : VARCHAR(100)
+  direccion : VARCHAR(150)
+}
+
+entity Empleado {
+  * idEmpleado : INT <<PK>>
+  --
+  nombre : VARCHAR(100)
+  especialidad : VARCHAR(50)
+  usuario : VARCHAR(50)
+  password : VARCHAR(100)
+  rol : ENUM('Administrador','Empleado')
+  salarioBase : DECIMAL(10,2)
+}
+
+entity Proveedor {
+  * idProveedor : INT <<PK>>
+  --
+  nombre : VARCHAR(100)
+  telefono : VARCHAR(20)
+  direccion : VARCHAR(150)
+}
+
+entity Producto {
+  * idProducto : INT <<PK>>
+  --
+  nombre : VARCHAR(100)
+  precio : DECIMAL(10,2)
+  stock : DECIMAL(10,2)
+  stockMinimo : DECIMAL(10,2)
+  idProveedor : INT <<FK>>
+}
+
+entity Servicio {
+  * idServicio : INT <<PK>>
+  --
+  nombre : VARCHAR(100)
+  duracion : INT
+  precio : DECIMAL(10,2)
+}
+
+entity Servicio_Producto {
+  * idServicio : INT <<FK>>
+  * idProducto : INT <<FK>>
+  cantidad : DECIMAL(10,2)
+}
+
+entity Turno {
+  * idTurno : INT <<PK>>
+  --
+  fechaHora : DATETIME
+  estado : ENUM('Pendiente','Confirmado','Realizado','Cancelado')
+  idCliente : INT <<FK>>
+  idEmpleado : INT <<FK>>
+  total : DECIMAL(10,2)
+}
+
+entity Turno_Servicio {
+  * idTurno : INT <<FK>>
+  * idServicio : INT <<FK>>
+}
+
+entity VentaProducto {
+  * idVenta : INT <<PK>>
+  --
+  fecha : DATETIME
+  total : DECIMAL(10,2)
+}
+
+entity Venta_Detalle {
+  * idVenta : INT <<FK>>
+  * idProducto : INT <<FK>>
+  cantidad : INT
+  precioUnitario : DECIMAL(10,2)
+}
+
+entity Ingreso {
+  * idIngreso : INT <<PK>>
+  --
+  fecha : DATETIME
+  monto : DECIMAL(10,2)
+  concepto : VARCHAR(150)
+  tipo : ENUM('Turno','Venta')
+  idTurno : INT <<FK>>
+  idVenta : INT <<FK>>
+}
+
+entity Egreso {
+  * idEgreso : INT <<PK>>
+  --
+  fecha : DATETIME
+  monto : DECIMAL(10,2)
+  concepto : VARCHAR(150)
+  tipo : ENUM('Proveedor','Honorario')
+  idProveedor : INT <<FK>>
+  idEmpleado : INT <<FK>>
+}
+
+' Relaciones
+Cliente ||--o{ Turno
+Empleado ||--o{ Turno
+Turno ||--o{ Turno_Servicio
+Servicio ||--o{ Turno_Servicio
+Proveedor ||--o{ Producto
+Servicio ||--o{ Servicio_Producto
+Producto ||--o{ Servicio_Producto
+Producto ||--o{ Venta_Detalle
+VentaProducto ||--o{ Venta_Detalle
+Turno ||--o{ Ingreso : "genera (Turno)"
+VentaProducto ||--o{ Ingreso : "genera (Venta)"
+Proveedor ||--o{ Egreso : "pago proveedor"
+Empleado ||--o{ Egreso : "pago honorarios"
+
+@enduml

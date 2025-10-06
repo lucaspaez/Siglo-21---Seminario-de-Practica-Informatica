@@ -1,0 +1,231 @@
+/'
+Materia: Desarrollo Web
+Trabajo Práctico Nro 2
+
+Profesor Titular Disciplinar: Pablo Alejandro Virgolini
+Titular Experto: Hugo Fernando Frias
+Alumno: Lucas Leonardo Paez
+Legajo: VINF016138
+'/
+
+@startuml Clases_Modelo
+title Capa de Modelo (Entidades del dominio)
+
+' ===== CONFIGURACIÓN VISUAL =====
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+
+package "Modelo (Entidades)" {
+
+class Persona {
+  - id : int
+  - nombre : String
+  - telefono : String
+  - email : String
+  --
+  + Persona()
+  + Persona(id:int, nombre:String, telefono:String, email:String)
+  + getId() : int
+  + setId(int)
+  + getNombre() : String
+  + setNombre(String)
+  + getTelefono() : String
+  + setTelefono(String)
+  + getEmail() : String
+  + setEmail(String)
+}
+
+class Cliente extends Persona {
+  - direccion : String
+  --
+  + Cliente()
+  + Cliente(id:int, nombre:String, telefono:String, email:String, direccion:String)
+  + getDireccion() : String
+  + setDireccion(String)
+}
+
+class Empleado extends Persona {
+  - especialidad : String
+  - usuario : String
+  - password : String
+  - rol : String
+  - salarioBase : double
+  --
+  + Empleado()
+  + Empleado(id:int, nombre:String, telefono:String, email:String, especialidad:String, usuario:String, password:String, rol:String, salarioBase:double)
+  + getEspecialidad() : String
+  + setEspecialidad(String)
+  + getUsuario() : String
+  + setUsuario(String)
+  + getPassword() : String
+  + setPassword(String)
+  + getRol() : String
+  + setRol(String)
+  + getSalarioBase() : double
+  + setSalarioBase(double)
+}
+
+class Proveedor {
+  - idProveedor : int
+  - nombre : String
+  - telefono : String
+  - direccion : String
+  --
+  + Proveedor()
+  + Proveedor(idProveedor:int, nombre:String, telefono:String, direccion:String)
+  + getIdProveedor() : int
+  + setIdProveedor(int)
+  + getNombre() : String
+  + setNombre(String)
+  + getTelefono() : String
+  + setTelefono(String)
+  + getDireccion() : String
+  + setDireccion(String)
+}
+
+class Producto {
+  - idProducto : int
+  - nombre : String
+  - precio : double
+  - stock : double
+  - stockMinimo : double
+  - proveedor : Proveedor
+  --
+  + Producto()
+  + Producto(idProducto:int, nombre:String, precio:double, stock:double, stockMinimo:double, proveedor:Proveedor)
+  + getIdProducto() : int
+  + setIdProducto(int)
+  + getNombre() : String
+  + setNombre(String)
+  + getPrecio() : double
+  + setPrecio(double)
+  + getStock() : double
+  + setStock(double)
+  + getStockMinimo() : double
+  + setStockMinimo(double)
+  + getProveedor() : Proveedor
+  + setProveedor(Proveedor)
+}
+
+class Servicio {
+  - idServicio : int
+  - nombre : String
+  - duracion : int
+  - precio : double
+  --
+  + Servicio()
+  + Servicio(idServicio:int, nombre:String, duracion:int, precio:double)
+  + getIdServicio() : int
+  + setIdServicio(int)
+  + getNombre() : String
+  + setNombre(String)
+  + getDuracion() : int
+  + setDuracion(int)
+  + getPrecio() : double
+  + setPrecio(double)
+}
+
+class Turno {
+  - idTurno : int
+  - fechaHora : Date
+  - estado : String
+  - cliente : Cliente
+  - empleado : Empleado
+  - servicios : List<Servicio>
+  - total : double
+  --
+  + Turno()
+  + Turno(idTurno:int, fechaHora:Date, estado:String, cliente:Cliente, empleado:Empleado)
+  + calcularTotal() : double
+  + confirmar()
+  + marcarRealizado()
+  + getIdTurno() : int
+  + setIdTurno(int)
+  + getFechaHora() : Date
+  + setFechaHora(Date)
+  + getEstado() : String
+  + setEstado(String)
+  + getCliente() : Cliente
+  + setCliente(Cliente)
+  + getEmpleado() : Empleado
+  + setEmpleado(Empleado)
+  + getServicios() : List<Servicio>
+  + setServicios(List<Servicio>)
+  + getTotal() : double
+  + setTotal(double)
+}
+
+class Ingreso {
+  - idIngreso : int
+  - fecha : Date
+  - monto : double
+  - tipo : String
+  - concepto : String
+  --
+  + Ingreso()
+  + Ingreso(idIngreso:int, fecha:Date, monto:double, tipo:String, concepto:String)
+  + getIdIngreso() : int
+  + setIdIngreso(int)
+  + getFecha() : Date
+  + setFecha(Date)
+  + getMonto() : double
+  + setMonto(double)
+  + getTipo() : String
+  + setTipo(String)
+  + getConcepto() : String
+  + setConcepto(String)
+}
+
+class Egreso {
+  - idEgreso : int
+  - fecha : Date
+  - monto : double
+  - tipo : String
+  - concepto : String
+  --
+  + Egreso()
+  + Egreso(idEgreso:int, fecha:Date, monto:double, tipo:String, concepto:String)
+  + getIdEgreso() : int
+  + setIdEgreso(int)
+  + getFecha() : Date
+  + setFecha(Date)
+  + getMonto() : double
+  + setMonto(double)
+  + getTipo() : String
+  + setTipo(String)
+  + getConcepto() : String
+  + setConcepto(String)
+}
+
+class VentaProducto {
+  - idVenta : int
+  - fecha : Date
+  - total : double
+  - detalles : List<Producto>
+  --
+  + VentaProducto()
+  + VentaProducto(idVenta:int, fecha:Date, total:double)
+  + getIdVenta() : int
+  + setIdVenta(int)
+  + getFecha() : Date
+  + setFecha(Date)
+  + getTotal() : double
+  + setTotal(double)
+  + getDetalles() : List<Producto>
+  + setDetalles(List<Producto>)
+}
+
+' === Relaciones ===
+Proveedor "1" --> "N" Producto
+Cliente "1" --> "N" Turno
+Empleado "1" --> "N" Turno
+Turno "1" --> "N" Ingreso
+Turno "1" --> "N" Servicio
+VentaProducto "1" --> "N" Ingreso
+Egreso --> Proveedor
+Egreso --> Empleado
+
+}
+
+@enduml

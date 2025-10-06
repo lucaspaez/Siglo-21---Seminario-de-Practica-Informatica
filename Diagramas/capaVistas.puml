@@ -1,0 +1,97 @@
+/'
+Materia: Desarrollo Web
+Trabajo Práctico Nro 2
+
+Profesor Titular Disciplinar: Pablo Alejandro Virgolini
+Titular Experto: Hugo Fernando Frias
+Alumno: Lucas Leonardo Paez
+Legajo: VINF016138
+'/
+@startuml Clases_Vistas
+title Capa de Vistas (Interfaz Gráfica - JavaFX)
+
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+
+package "Vistas (JavaFX)" {
+
+class PantallaLogin {
+  - txtUsuario : TextField
+  - txtPassword : PasswordField
+  - btnIngresar : Button
+  --
+  + PantallaLogin()
+  + iniciarSesion()
+  + mostrarError(mensaje:String)
+}
+
+class PantallaPrincipal {
+  - menuTurnos : Button
+  - menuClientes : Button
+  - menuVentas : Button
+  - menuEgresos : Button
+  - menuSalir : Button
+  --
+  + PantallaPrincipal()
+  + abrirPantallaTurnos()
+  + abrirPantallaClientes()
+  + abrirPantallaVentas()
+  + abrirPantallaEgresos()
+}
+
+class PantallaTurnos {
+  - tablaTurnos : TableView<Turno>
+  - btnAgregar : Button
+  - btnConfirmar : Button
+  - btnRealizado : Button
+  --
+  + PantallaTurnos()
+  + mostrarTurnos()
+  + confirmarTurno()
+  + marcarRealizado()
+}
+
+class PantallaClientes {
+  - tablaClientes : TableView<Cliente>
+  - txtNombre : TextField
+  - txtTelefono : TextField
+  - txtEmail : TextField
+  - btnRegistrar : Button
+  --
+  + PantallaClientes()
+  + mostrarClientes()
+  + registrarCliente()
+}
+
+class PantallaVentas {
+  - tablaProductos : TableView<Producto>
+  - btnRegistrarVenta : Button
+  --
+  + PantallaVentas()
+  + mostrarProductos()
+  + registrarVenta()
+}
+
+class PantallaEgresos {
+  - tablaEgresos : TableView<Egreso>
+  - btnNuevoEgreso : Button
+  --
+  + PantallaEgresos()
+  + mostrarEgresos()
+  + registrarEgreso()
+}
+
+PantallaLogin --> PantallaPrincipal
+PantallaPrincipal --> PantallaTurnos
+PantallaPrincipal --> PantallaClientes
+PantallaPrincipal --> PantallaVentas
+PantallaPrincipal --> PantallaEgresos
+PantallaTurnos --> ControladorTurno
+PantallaClientes --> ControladorCliente
+PantallaVentas --> ControladorVenta
+PantallaEgresos --> ControladorEgreso
+
+}
+
+@enduml
