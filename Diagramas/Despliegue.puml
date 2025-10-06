@@ -1,0 +1,63 @@
+@startuml
+title Diagrama de Despliegue - Aplicación de Gestión de Peluquería (JavaFX Standalone)
+
+skinparam componentStyle rectangle
+skinparam nodesep 50
+skinparam ranksep 60
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam classAttributeIconSize 0
+
+' === NODO CLIENTE LOCAL ===
+node "PC del Usuario (Cliente)" as NodoCliente {
+  artifact "Aplicación de Gestión de Peluquería" as App {
+    component "Interfaz Gráfica (JavaFX)" as GUI
+    component "Controladores (MVC)" as Control
+    component "Persistencia y DAOs" as DAO
+    component "Configuración / Logs" as Config
+    component "Bibliotecas externas (.jar)" as Libs
+  }
+  
+  [JRE / JavaFX Runtime Environment]
+  
+  GUI -[hidden]-> Control
+  Control -[hidden]-> DAO
+}
+
+' === NODO BASE DE DATOS LOCAL ===
+node "Servidor de Base de Datos Local" as ServidorBD {
+  database "Base de Datos Peluquería" as BD {
+    frame "Tablas principales" {
+      component "T_Cliente"
+      component "T_Empleado"
+      component "T_Proveedor"
+      component "T_Producto"
+      component "T_Servicio"
+      component "T_Turno"
+      component "T_Ingreso"
+      component "T_Egreso"
+    }
+  }
+  [Motor MySQL/MariaDB]
+}
+
+' === RELACIONES ENTRE NODOS ===
+App --> BD : "Conexión JDBC\njdbc:mysql://localhost/peluqueria"
+DAO --> BD : usa
+Config --> App : lee parámetros de conexión
+
+' === RED LOCAL / SISTEMA OPERATIVO ===
+cloud "Sistema Operativo / Red Local" as Red {
+  [Windows 10 / Linux Ubuntu]
+  [Driver JDBC]
+}
+
+' === CONEXIONES ===
+App ..> [Driver JDBC] : utiliza
+[Driver JDBC] ..> [Motor MySQL/MariaDB] : conexión local
+
+' === AGRUPACIÓN VISUAL ===
+NodoCliente -[#blue]-> Red : ejecuta sobre
+Red -[#green]-> ServidorBD : comunicación local (TCP/IP)
+
+@enduml

@@ -1,0 +1,65 @@
+@startuml Clases_Controladores
+title Capa de Controladores (Lógica del negocio - MVC)
+
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+
+package "Controladores (Negocio)" {
+
+class ConexionBD {
+  - url : String
+  - usuario : String
+  - contraseña : String
+  --
+  + ConexionBD()
+  + getConexion() : Connection
+  + cerrarConexion()
+}
+
+class ControladorBase {
+  - conexion : ConexionBD
+  --
+  + ControladorBase()
+  + conectar()
+  + desconectar()
+}
+
+class ControladorCliente extends ControladorBase {
+  + validarDatosCliente(nombre:String, telefono:String, email:String) : boolean
+  + registrarCliente(cliente:Cliente)
+  + listarClientes() : List<Cliente>
+}
+
+class ControladorTurno extends ControladorBase {
+  + validarDisponibilidadEmpleado(empleado:Empleado, fechaHora:Date) : boolean
+  + agendarTurno(turno:Turno)
+  + confirmarTurno(idTurno:int)
+  + marcarRealizado(idTurno:int)
+  + listarTurnos() : List<Turno>
+}
+
+class ControladorVenta extends ControladorBase {
+  + registrarVenta(productos:List<Producto>)
+  + calcularTotal(productos:List<Producto>) : double
+}
+
+class ControladorIngreso extends ControladorBase {
+  + registrarIngresoPorTurno(idTurno:int, monto:double)
+  + registrarIngresoPorVenta(idVenta:int, monto:double)
+}
+
+class ControladorEgreso extends ControladorBase {
+  + registrarEgresoProveedor(proveedor:Proveedor, monto:double)
+  + registrarEgresoEmpleado(empleado:Empleado, monto:double)
+}
+
+ControladorBase <|-- ControladorCliente
+ControladorBase <|-- ControladorTurno
+ControladorBase <|-- ControladorVenta
+ControladorBase <|-- ControladorIngreso
+ControladorBase <|-- ControladorEgreso
+
+}
+
+@enduml
